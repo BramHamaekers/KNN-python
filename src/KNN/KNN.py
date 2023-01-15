@@ -1,4 +1,4 @@
-import distances
+from src.KNN import distances
 
 
 class KNN_model:
