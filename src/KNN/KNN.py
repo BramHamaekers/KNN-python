@@ -1,4 +1,12 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from src.KNN import distances
+
+
+def preprocess(dataset):
+    dataset = pd.get_dummies(dataset)  # applies OneHotEncoding
+    dataset[dataset.columns] = MinMaxScaler().fit_transform(dataset[dataset.columns])  # Min-max normalization
+    return dataset
 
 
 class KNN_model:
@@ -9,7 +17,7 @@ class KNN_model:
         self.y_train = None
 
     def fit(self, x_train, y_train):
-        self.x_train = x_train
+        self.x_train = preprocess(x_train)
         self.y_train = y_train
 
     def distance(self, x, y):
@@ -28,6 +36,7 @@ class KNN_model:
         return list(zip(*d_list))[0][:self.k]
 
     def predict(self, test_set):
+        test_set = preprocess(test_set)
         predictions = []
         for test_sample in test_set.values:
             neighbors = self.KNN(test_sample)

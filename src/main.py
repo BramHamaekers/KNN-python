@@ -1,23 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics import confusion_matrix, accuracy_score
-from sklearn.model_selection import train_test_split
 from src.KNN.KNN import KNN_model
-
-
-def load_iris():
-    url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
-    attributes = ["sepal_length", "sepal_width", "petal_length", "petal_width", "species"]
-    dataset = pd.read_csv(url, names=attributes)
-    dataset.columns = attributes
-
-    train, test = train_test_split(dataset, test_size=0.4, stratify=dataset['species'], random_state=55)
-    X_train = train[["sepal_length", "sepal_width", "petal_length", "petal_width"]]
-    Y_train = train.species
-    X_test = test[["sepal_length", "sepal_width", "petal_length", "petal_width"]]
-    Y_test = test.species
-
-    return X_train, Y_train, X_test, Y_test
+import src.datasets as datasets
 
 
 def KNN(X_train, Y_train, X_test, Y_test, k=5, distance_type='euclidean'):
@@ -44,8 +29,8 @@ def KNN(X_train, Y_train, X_test, Y_test, k=5, distance_type='euclidean'):
 
 
 def main():
-    X_train, Y_train, X_test, Y_test = load_iris()  # load dataset iris and split into train and test set
-    KNN(X_train, Y_train, X_test, Y_test)  # apply nearest neighbour
+    X_train, Y_train, X_test, Y_test = datasets.load_iris()  # load dataset iris and split into train and test set
+    KNN(X_train, Y_train, X_test, Y_test, k=3, distance_type='manhattan')  # apply nearest neighbour
 
 
 if __name__ == "__main__":
