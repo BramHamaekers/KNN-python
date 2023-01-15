@@ -45,7 +45,6 @@ def KNN(X_train, Y_train, X_test, Y_test, k=5, distance_type='euclidean'):
     print('accuracy:', accuracy)
     print('confusion_matrix:')
     print(cm)
-
     print('-------------------')
 
 
