@@ -11,12 +11,7 @@ def load_iris():
     dataset = pd.read_csv(url, names=attributes)
     dataset.columns = attributes
 
-    return dataset
-
-
-def split_dataset(dataset):
     train, test = train_test_split(dataset, test_size=0.4, stratify=dataset['species'], random_state=55)
-
     X_train = train[["sepal_length", "sepal_width", "petal_length", "petal_width"]]
     Y_train = train.species
     X_test = test[["sepal_length", "sepal_width", "petal_length", "petal_width"]]
@@ -49,8 +44,7 @@ def KNN(X_train, Y_train, X_test, Y_test, k=5, distance_type='euclidean'):
 
 
 def main():
-    dataset = load_iris()  # load dataset iris
-    X_train, Y_train, X_test, Y_test = split_dataset(dataset)  # split dataset into train and test set
+    X_train, Y_train, X_test, Y_test = load_iris()  # load dataset iris and split into train and test set
     KNN(X_train, Y_train, X_test, Y_test)  # apply nearest neighbour
 
 
