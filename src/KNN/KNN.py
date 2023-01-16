@@ -18,9 +18,9 @@ class KNN_model:
 
     def preprocess(self, dataset, is_test_data=False):
         dataset = pd.get_dummies(dataset)  # applies OneHotEncoding
-        if not self.normalization: return dataset
 
         # Min-max normalization
+        if not self.normalization: return dataset
         if is_test_data: dataset[dataset.columns] = self.scaler.transform(dataset[dataset.columns])
         else: dataset[dataset.columns] = self.scaler.fit_transform(dataset[dataset.columns])
         return dataset
@@ -37,7 +37,6 @@ class KNN_model:
         for idx, instance in enumerate(self.x_train.values):
             d_list.append((self.y_train.values[idx], self.distance(sample, instance), instance))
         d_list.sort(key=lambda x: x[1])  # x[1] = distance -> so sorted on smallest distance
-
         return list(zip(*d_list))[0][:self.k]
 
     def predict(self, test_set):
