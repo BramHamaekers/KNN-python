@@ -33,3 +33,38 @@ def load_penguins():
     Y_test = test.species
 
     return X_train, Y_train, X_test, Y_test
+
+
+def load_BMI():
+    url = 'https://raw.githubusercontent.com/abhiwalia15/500-Person-Gender-Height-Weight-Body-Mass-Index/master/500_Person_Gender_Height_Weight_Index.csv'
+    attributes = ['Gender', 'Height', 'Weight', 'BMI']
+    dataset = pd.read_csv(url, names=attributes)[1:]
+    dataset.columns = attributes
+    dataset[['Height', 'Weight', 'BMI']] = dataset[['Height', 'Weight', 'BMI']].apply(pd.to_numeric)
+
+    train, test = train_test_split(dataset, test_size=0.3, stratify=dataset['BMI'], random_state=45)
+    X_train = train[['Gender', 'Height', 'Weight']]
+    Y_train = train.BMI
+    X_test = test[['Gender', 'Height', 'Weight']]
+    Y_test = test.BMI
+
+    return X_train, Y_train, X_test, Y_test
+
+
+def load_Obesity():
+    url = 'https://raw.githubusercontent.com/abhiwalia15/500-Person-Gender-Height-Weight-Body-Mass-Index/master/500_Person_Gender_Height_Weight_Index.csv'
+    attributes = ['Gender', 'Height', 'Weight', 'BMI']
+    dataset = pd.read_csv(url, names=attributes)[1:]
+    dataset.columns = attributes
+    dataset[['Height', 'Weight', 'BMI']] = dataset[['Height', 'Weight', 'BMI']].apply(pd.to_numeric)
+
+    dataset['Obese'] = (dataset.BMI >= 4).astype('object')
+    dataset.drop('BMI', axis=1, inplace=True)
+
+    train, test = train_test_split(dataset, test_size=0.3, stratify=dataset['Obese'], random_state=60)
+    X_train = train[['Gender', 'Height', 'Weight']]
+    Y_train = train.Obese
+    X_test = test[['Gender', 'Height', 'Weight']]
+    Y_test = test.Obese
+
+    return X_train, Y_train, X_test, Y_test
