@@ -4,6 +4,7 @@ import pandas as pd
 
 from src import datasets
 from src.D_TREE import D_TREE
+from src.D_TREE.D_TREE import D_TREE_model
 
 
 class test_D_TREE(unittest.TestCase):
@@ -33,6 +34,41 @@ class test_D_TREE(unittest.TestCase):
         # Test cases
         ig = D_TREE.information_gain(X, Y, X['Gender'] == 'Male')
         self.assertEqual(round(ig, 7), 0.0005507)
+
+    def test_get_best_split(self):
+        # Create data
+        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X = pd.concat([X_train, X_test], axis=0)
+        Y = pd.concat([Y_train, Y_test], axis=0)
+
+        # Test cases
+        best_test, best_IG = D_TREE.get_best_split(X, Y)
+        self.assertEqual(round(best_IG, 7), 0.3824541)
+
+    def test_make_split(self):
+        # Create data
+        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X = pd.concat([X_train, X_test], axis=0).head()  ####### HEAD
+        Y = pd.concat([Y_train, Y_test], axis=0).head()
+
+        D_TREE.make_split(X, Y, X['Weight'] < 90)
+
+        # Test cases
+        # TODO test does nothing
+
+    def test_fit_D_Tree(self):
+        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X = pd.concat([X_train, X_test], axis=0)
+        Y = pd.concat([Y_train, Y_test], axis=0)
+
+        model = D_TREE_model()
+        model.fit(X, Y)
+        print(model.root.left.left.left.X)
+
+        # TODO test growing tree somehow and test predictions made by tree
+
+
+
 
 
 
