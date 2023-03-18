@@ -4,9 +4,9 @@ import numpy as np
 import unittest
 import pandas as pd
 
-from src import datasets
 from src.D_TREE import D_TREE
 from src.D_TREE.D_TREE import D_TREE_model, D_TREE_test
+from src.datasets import data_loader
 
 
 class test_D_TREE(unittest.TestCase):
@@ -29,7 +29,7 @@ class test_D_TREE(unittest.TestCase):
 
     def test_information_gain(self):
         # Create data
-        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X_train, Y_train, X_test, Y_test = data_loader.load_Obesity()
         X = pd.concat([X_train, X_test], axis=0)
         Y = pd.concat([Y_train, Y_test], axis=0)
 
@@ -39,7 +39,7 @@ class test_D_TREE(unittest.TestCase):
 
     def test_get_best_split(self):
         # Create data
-        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X_train, Y_train, X_test, Y_test = data_loader.load_Obesity()
         X = pd.concat([X_train, X_test], axis=0)
         Y = pd.concat([Y_train, Y_test], axis=0)
 
@@ -49,7 +49,7 @@ class test_D_TREE(unittest.TestCase):
 
     def test_make_split(self):
         # Create data
-        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X_train, Y_train, X_test, Y_test = data_loader.load_Obesity()
         X = pd.concat([X_train, X_test], axis=0).head()  ####### HEAD
         Y = pd.concat([Y_train, Y_test], axis=0).head()
 
@@ -59,8 +59,11 @@ class test_D_TREE(unittest.TestCase):
         # TODO test does nothing
 
     def test_fit_D_Tree(self):
-        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        print('start')
+        X_train, Y_train, X_test, Y_test = data_loader.load_Obesity()
+        print(1)
         X = pd.concat([X_train, X_test], axis=0)
+        print(2)
         Y = pd.concat([Y_train, Y_test], axis=0)
 
         model = D_TREE_model()
@@ -71,7 +74,7 @@ class test_D_TREE(unittest.TestCase):
 
     def test_make_prediction(self):
         # Create data
-        X_train, Y_train, X_test, Y_test = datasets.load_Obesity()
+        X_train, Y_train, X_test, Y_test = data_loader.load_BMI()
         X = pd.concat([X_train, X_test], axis=0).head(5)  ####### HEAD
         Y = pd.concat([Y_train, Y_test], axis=0).head(5)
 
@@ -85,6 +88,9 @@ class test_D_TREE(unittest.TestCase):
         print('=================================')
 
         print(D_TREE_test('Height', 100, operator.lt).test(ind_X))
+
+
+        print(5*'-')
 
 
 

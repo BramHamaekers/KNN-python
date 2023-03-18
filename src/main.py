@@ -4,7 +4,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 from src.D_TREE.D_TREE import D_TREE_model
 from src.KNN.KNN import KNN_model
-import src.datasets as datasets
+import src.datasets.data_loader as data_loader
 
 
 def KNN(X_train, Y_train, X_test, Y_test, k=5, distance_type='euclidean', normalization=False):
@@ -37,7 +37,7 @@ def DECISION_TREE(X_train, Y_train, X_test, Y_test):
 
 
 def main():
-    X_train, Y_train, X_test, Y_test = datasets.load_penguins()  # load dataset iris and split into train and test set
+    X_train, Y_train, X_test, Y_test = data_loader.load_BMI()  # load dataset iris and split into train and test set
 
     KNN(X_train, Y_train, X_test, Y_test, k=3, distance_type='chebyshev', normalization=True)  # apply k nearest neighbour
     DECISION_TREE(X_train, Y_train, X_test, Y_test)  # apply decision tree learner
