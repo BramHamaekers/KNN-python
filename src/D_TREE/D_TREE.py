@@ -29,11 +29,12 @@ def information_gain(X, Y, test_values):
 
 
 def get_best_split(X, Y):
+
     values_dict = X.apply(lambda column: column.unique()).to_dict()
     best_IG, best_test = 0, None
     for col in values_dict:
         for value in values_dict[col]:
-            if is_numeric_dtype(values_dict[col].dtype):
+            if is_numeric_dtype(value):
                 test = D_TREE_test(col, value, operator.lt)
             else:
                 test = D_TREE_test(col, value, operator.eq)
@@ -52,12 +53,6 @@ def make_split(X_train, Y_train, test_values):
     X_2 = X_train[-test]
     Y_2 = Y_train[-test]
     return X_1, Y_1, X_2, Y_2
-
-
-def make_prediction(X, Y):
-    # IDFK do something i guess TODO
-    return 0
-
 
 class D_TREE_test:
     def __init__(self, target, value, test_operator):
@@ -105,3 +100,17 @@ class D_TREE_model:
             # Recursively grow tree
             self.grow_tree(node.left)
             self.grow_tree(node.right)
+
+    def predict_sample(self, sample, node=None):
+        if not node: node = self.root
+        if node.test is None:  # return most frequent Y value in node
+            return node.Y.mode().values[0]
+        elif node.test.test(sample): return self.predict_sample(sample, node.left)
+        return self.predict_sample(sample, node.right)
+
+    def predict(self, test_set):
+        predictions = []
+        for sample_idx in range(len(test_set)):
+            prediction = self.predict_sample(test_set.iloc[sample_idx])
+            predictions.append(prediction)
+        return predictions

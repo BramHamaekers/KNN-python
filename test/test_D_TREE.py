@@ -59,11 +59,8 @@ class test_D_TREE(unittest.TestCase):
         # TODO test does nothing
 
     def test_fit_D_Tree(self):
-        print('start')
         X_train, Y_train, X_test, Y_test = data_loader.load_Obesity()
-        print(1)
         X = pd.concat([X_train, X_test], axis=0)
-        print(2)
         Y = pd.concat([Y_train, Y_test], axis=0)
 
         model = D_TREE_model()
