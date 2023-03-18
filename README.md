@@ -1,11 +1,11 @@
 # ML-python
 
 ## Implemented
-KNN
-Decision Tree
+KNN,
+Decision Tree,
 
 ## Future plans
-K-means
-Neural Network
-Support Vector Machine
+K-means,
+Neural Network,
+Support Vector Machine,
 ...
